@@ -2,53 +2,63 @@ using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
-    public GameObject player;               // Reference to the player
-    public GameObject projectilePrefab;     // Reference to the projectile prefab
-    public Transform shootingPoint;         // Point from where the projectile will be shot
-    public float shootCooldown = 2f;        // Cooldown between shots
-    public int scoreValue = 150;            // Points awarded when the enemy is destroyed
+    [Header("Shooting Settings")]
+    public GameObject bulletPrefab;  // Bullet prefab to instantiate
+    public Transform shootPoint;     // Point from where the bullet will shoot
+    public float shootForce = 10f;   // Force applied to the bullet
+    public float shootCooldown = 2f; // Cooldown between shots
+    public float shootingRange = 15f; // Range at which the enemy can shoot
 
-    private float timeSinceLastShot = 0f;   // Timer for the shooting cooldown
+    private Transform player;        // Player's transform reference
+    private float nextShootTime;     // Time for the next possible shot
 
-    void Update()
+    private void Start()
     {
-        timeSinceLastShot += Time.deltaTime;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+    }
 
-        // Check if the cooldown is over and the enemy can shoot
-        if (timeSinceLastShot >= shootCooldown)
+    private void Update()
+    {
+        if (player == null) return;
+
+        // Check if the player is within shooting range
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer > shootingRange) return;
+
+        // Aim at the player
+        AimAtPlayer();
+
+        // Shoot if cooldown is over
+        if (Time.time >= nextShootTime)
         {
-            ShootProjectile();
-            timeSinceLastShot = 0f;  // Reset cooldown timer
+            Shoot();
+            nextShootTime = Time.time + shootCooldown; // Reset the cooldown timer
         }
     }
 
-    // Method to shoot a projectile towards the player
-    void ShootProjectile()
+    private void AimAtPlayer()
     {
-        if (player != null && projectilePrefab != null && shootingPoint != null)
-        {
-            // Calculate the direction towards the player
-            Vector3 direction = (player.transform.position - shootingPoint.position).normalized;
-
-            // Instantiate the projectile and shoot it towards the player
-            GameObject projectile = Instantiate(projectilePrefab, shootingPoint.position, Quaternion.identity);
-
-            // Get the Rigidbody of the projectile
-            Rigidbody projectileRb = projectile.GetComponent<Rigidbody>();
-
-            // If the projectile has a Rigidbody, set its velocity to the direction
-            if (projectileRb != null)
-            {
-                projectileRb.linearVelocity = direction * 10f; // 10f is the speed of the projectile
-            }
-        }
+        // Get the direction from the enemy to the player and normalize it
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0; // Make sure the enemy doesn't rotate on the y-axis (vertical axis)
+        transform.rotation = Quaternion.LookRotation(direction); // Rotate the enemy to face the player
     }
 
-    // When the enemy is destroyed, increase the score
-    private void OnDestroy()
+    private void Shoot()
     {
-        // Add score when the enemy is destroyed
-        ScoreManager.Instance.IncreaseScore(scoreValue);
-        Debug.Log("Shooting enemy destroyed, score increased!");
+        // Instantiate the bullet at the shoot point with the correct rotation
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+
+        // Ensure the bullet has a Rigidbody for movement
+        Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+        if (bulletRb != null)
+        {
+            bulletRb.AddForce(shootPoint.forward * shootForce, ForceMode.Impulse); // Apply force to the bullet
+        }
+
+        // Destroy the bullet after 3 seconds to avoid clutter
+        Destroy(bullet, 3f);
+
+        Debug.Log("Enemy fired a bullet!");
     }
 }

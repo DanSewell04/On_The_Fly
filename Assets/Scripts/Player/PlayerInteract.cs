@@ -2,33 +2,33 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    public float interactionDistance = 3f;  // How close the player needs to be to interact with an object.
-    public KeyCode interactKey = KeyCode.E; // The key to press for interaction.
-
-    void Update()
+    public float interactionDistance = 3f;  // Interaction range
+    private void OnCollisionEnter(Collision collision)
     {
-        // Raycast from the player to check if there is an interactable object in front.
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance))
+        // Check if the object collided with the player is interactable
+        if (collision.gameObject.CompareTag("Interactable"))
         {
-            // Check if the object is tagged as "Interactable".
-            if (hit.collider.CompareTag("Interactable"))
-            {
-                // Display a message in the console (or UI) to show that the object is interactable.
-                Debug.Log("Press " + interactKey.ToString() + " to interact with " + hit.collider.name);
+            // Log interaction
+            Debug.Log("Interacting with " + collision.gameObject.name);
 
-                // If the player presses the interact key, call the interact method.
-                if (Input.GetKeyDown(interactKey))
-                {
-                    InteractWithObject(hit.collider.gameObject);
-                }
-            }
+            // Interact with the object immediately
+            InteractWithObject(collision.gameObject);
         }
     }
 
     private void InteractWithObject(GameObject interactableObject)
     {
         Debug.Log("Interacting with " + interactableObject.name);
-        Destroy(interactableObject); 
+
+        // Try calling a pickup, if the object has the ItemPickup component
+        if (interactableObject.TryGetComponent(out ItemPickup pickup))
+        {
+            pickup.Pickup(gameObject);  // Pass the player GameObject to the Pickup method
+        }
+        else
+        {
+            // Default fallback: destroy the object
+            Destroy(interactableObject);
+        }
     }
 }

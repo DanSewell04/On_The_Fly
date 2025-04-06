@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 89079341501719616}
   - component: {fileID: 264017940831860403}
   - component: {fileID: 9015870612528815437}
-  - component: {fileID: -7444890217473265433}
+  - component: {fileID: 6510985093296087948}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.298, y: 1.505, z: 1.149}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -132,12 +132,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7444890217473265433
+--- !u!114 &6510985093296087948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 31518583526645395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7b573b4d65e1f40a67dc46c94cec16, type: 3}
+  m_Script: {fileID: 11500000, guid: c1316743b20fa1241b8eb9e9f8394a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10

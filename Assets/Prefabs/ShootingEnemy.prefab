@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8997196411234951546}
   - component: {fileID: 5983540818071046500}
   - component: {fileID: -5266546601973090568}
-  - component: {fileID: -4664563672630538240}
   m_Layer: 0
   m_Name: ShootingEnemy
   m_TagString: Untagged
@@ -151,23 +150,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-4664563672630538240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3444721318193381977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 162bfcced3c7cc04a9d2a955bb2290f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  projectilePrefab: {fileID: 31518583526645395, guid: 7d5f5fa179094ca4abd036f0be5d9714, type: 3}
-  shootingPoint: {fileID: 3729041863926440105}
-  shootCooldown: 2
-  scoreValue: 150
 --- !u!1 &8485630299599612817
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 8485630299599612817}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.603, y: 0.212, z: 0.645}
+  m_LocalPosition: {x: -0.106, y: 0.373, z: 1.285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -209,15 +191,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7658220749019867078, guid: d32892c82a841e34bb692140d685dcfc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.49993706
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 7658220749019867078, guid: d32892c82a841e34bb692140d685dcfc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04756713
+      value: 0.217
       objectReference: {fileID: 0}
     - target: {fileID: 7658220749019867078, guid: d32892c82a841e34bb692140d685dcfc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.007912636
+      value: 0.522
       objectReference: {fileID: 0}
     - target: {fileID: 7658220749019867078, guid: d32892c82a841e34bb692140d685dcfc, type: 3}
       propertyPath: m_LocalRotation.w
