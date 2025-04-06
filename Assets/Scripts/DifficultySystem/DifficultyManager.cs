@@ -1,8 +1,15 @@
+using TMPro;
 using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
 {
-    
+
+    // UI Elements (using TMPro instead of Unity UI Text)
+    public TextMeshProUGUI difficultyText;
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI accuracyText;
+    public TextMeshProUGUI kdText;
+
     // Player performance metrics
     private float playerHealthPercentage = 1f;
     private float playerAccuracy = 0f;
@@ -37,6 +44,9 @@ public class DifficultyManager : MonoBehaviour
     {
         // Initialize with player's starting health
         maxPlayerHealth = PlayerHealth.instance.maxHealth;
+
+        // Optionally, set the UI elements on start
+        UpdateUI();
     }
 
     private void Update()
@@ -49,6 +59,9 @@ public class DifficultyManager : MonoBehaviour
             UpdatePlayerMetrics();
             CalculateDifficulty();
             lastUpdateTime = Time.time;
+
+            // Update UI every update interval
+            UpdateUI();
         }
     }
 
@@ -126,5 +139,15 @@ public class DifficultyManager : MonoBehaviour
     public int GetAdjustedEnemyCount()
     {
         return Mathf.RoundToInt(Mathf.Lerp(minEnemiesPerWave, maxEnemiesPerWave, currentDifficulty));
+    }
+
+    // Method to update the UI
+    private void UpdateUI()
+    {
+        // Update UI elements with current player metrics and difficulty
+        if (difficultyText != null) difficultyText.text = "Difficulty: " + (currentDifficulty * 100).ToString("F1") + "%";
+        if (healthText != null) healthText.text = "Health: " + (playerHealthPercentage * 100).ToString("F1") + "%";
+        if (accuracyText != null) accuracyText.text = "Accuracy: " + (playerAccuracy * 100).ToString("F1") + "%";
+        if (kdText != null) kdText.text = "K/D Ratio: " + killDeathRatio.ToString("F2");
     }
 }

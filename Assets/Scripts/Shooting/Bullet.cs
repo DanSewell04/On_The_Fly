@@ -7,29 +7,45 @@ public class Bullet : MonoBehaviour
     public float lifeTime = 5f;
 
     private DifficultyManager difficultyManager;
-
     private Rigidbody rb;
 
     private void Start()
     {
+        // Find any instance of DifficultyManager in the scene
+        difficultyManager = Object.FindAnyObjectByType<DifficultyManager>();
+
+        // Ensure the Rigidbody is attached
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.linearVelocity = transform.forward * speed;
         }
 
-        Destroy(gameObject, lifeTime); 
+        // Destroy the bullet after its lifetime
+        Destroy(gameObject, lifeTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Check if the collided object is an enemy
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
+            // Deal damage to the enemy
             enemy.TakeDamage(damage);
-            difficultyManager.RegisterShotHit();
+
+            // Ensure difficultyManager is assigned before calling RegisterShotHit()
+            if (difficultyManager != null)
+            {
+                difficultyManager.RegisterShotHit();
+            }
+            else
+            {
+                Debug.LogError("DifficultyManager is not assigned in Bullet.");
+            }
         }
 
-        Destroy(gameObject); 
+        // Destroy the bullet after collision
+        Destroy(gameObject);
     }
 }
