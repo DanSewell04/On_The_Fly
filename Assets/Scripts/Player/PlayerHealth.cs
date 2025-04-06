@@ -2,15 +2,35 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth instance;  // Singleton instance
     public int maxHealth = 100;      // Max health for the player.
-    private int currentHealth;       // Current health of the player.
+    public int currentHealth;       // Current health of the player.
 
     public bool isDead = false;      // Flag to check if the player is dead.
+
+    private DifficultyManager difficultyManager;
 
     void Start()
     {
         currentHealth = maxHealth;   
         Debug.Log("Player Health Initialized: " + currentHealth);
+
+        difficultyManager = FindAnyObjectByType<DifficultyManager>();
+    }
+
+    private void Awake()
+    {
+        // Set the singleton instance
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        currentHealth = maxHealth;
     }
 
     // Function to take damage.
@@ -30,6 +50,8 @@ public class PlayerHealth : MonoBehaviour
     // Function to handle player death.
     private void Die()
     {
+        difficultyManager.RegisterPlayerDeath();
+
         isDead = true;
         Debug.Log("Player has died.");
 

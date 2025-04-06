@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
     public float speed = 20f;
     public float lifeTime = 5f;
 
+    private DifficultyManager difficultyManager;
+
     private Rigidbody rb;
 
     private void Start()
@@ -25,6 +27,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+            difficultyManager.RegisterShotHit();
         }
 
         Destroy(gameObject); 

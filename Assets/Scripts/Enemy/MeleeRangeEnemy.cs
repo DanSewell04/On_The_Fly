@@ -2,94 +2,101 @@ using UnityEngine;
 
 public class MeleeRangeEnemy : MonoBehaviour
 {
-    [SerializeField] private GameObject player;          // The player GameObject
-    public float moveSpeed = 3f;       // Movement speed of the enemy
-    public float attackRange = 2f;     // Range in which the enemy can attack the player
-    public float attackCooldown = 1f;  // Cooldown time between attacks
-    public int attackDamage = 10;      // Damage dealt by the melee attack
-    public int scoreValue = 100;       // Points to add when the enemy is defeated
+    [SerializeField] private GameObject player;
+    private DifficultyManager difficultyManager;
 
-    private float timeSinceLastAttack = 0f; // Timer for attack cooldown
-    private bool isPlayerInRange = false;  // Flag to check if player is in attack range
+    // Base stats (will be modified by difficulty)
+    public float baseMoveSpeed = 3f;
+    public float baseAttackRange = 2f;
+    public float baseAttackCooldown = 1f;
+    public int baseAttackDamage = 10;
+    public int scoreValue = 100;
+
+    // Current stats (after difficulty adjustment)
+    private float currentMoveSpeed;
+    private float currentAttackRange;
+    private float currentAttackCooldown;
+    private int currentAttackDamage;
+
+    private float timeSinceLastAttack = 0f;
+    private bool isPlayerInRange = false;
+
+    private void Start()
+    {
+        difficultyManager = FindAnyObjectByType<DifficultyManager>();
+        ApplyDifficultySettings();
+    }
+
+    private void ApplyDifficultySettings()
+    {
+        float difficulty = difficultyManager.currentDifficulty;
+
+        // Adjust stats based on difficulty (linear interpolation)
+        currentMoveSpeed = Mathf.Lerp(baseMoveSpeed * 0.8f, baseMoveSpeed * 1.5f, difficulty);
+        currentAttackRange = Mathf.Lerp(baseAttackRange * 0.9f, baseAttackRange * 1.3f, difficulty);
+        currentAttackCooldown = Mathf.Lerp(baseAttackCooldown * 1.2f, baseAttackCooldown * 0.7f, difficulty);
+        currentAttackDamage = Mathf.RoundToInt(Mathf.Lerp(baseAttackDamage, baseAttackDamage * 2f, difficulty));
+    }
 
     private void Update()
     {
-        // Decrease timeSinceLastAttack to track cooldown
         timeSinceLastAttack += Time.deltaTime;
-
-        // Move towards the player
         MoveTowardsPlayer();
-
-        // Check if the player is within attack range
         CheckForAttackRange();
 
-        // If player is in range and cooldown has passed, perform attack
-        if (isPlayerInRange && timeSinceLastAttack >= attackCooldown)
+        if (isPlayerInRange && timeSinceLastAttack >= currentAttackCooldown)
         {
             Attack();
         }
     }
 
-    // Move the enemy towards the player
     private void MoveTowardsPlayer()
     {
         if (player != null)
         {
             Vector3 direction = (player.transform.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            transform.position += direction * currentMoveSpeed * Time.deltaTime;
         }
     }
 
-    // Check if the player is within attack range
     private void CheckForAttackRange()
     {
         if (player != null)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            isPlayerInRange = distance <= attackRange;
+            isPlayerInRange = distance <= currentAttackRange;
         }
     }
 
-    // Perform the attack (on collision)
     private void Attack()
     {
-        // Reset the attack cooldown timer
         timeSinceLastAttack = 0f;
 
-        // Display a simple attack message or implement damage logic
-        Debug.Log("Attacking Player!");
-
-       
         if (isPlayerInRange)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(attackDamage);
+                playerHealth.TakeDamage(currentAttackDamage);
             }
         }
     }
 
-    // Detect collision with the player and apply damage
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player")) // Check if the colliding object is the player
+        if (collision.gameObject.CompareTag("Player"))
         {
-           
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(attackDamage);
-                Debug.Log("Player hit by enemy!");
+                playerHealth.TakeDamage(currentAttackDamage);
             }
         }
     }
 
-    // When enemy is defeated, add score
     private void OnDestroy()
     {
-       
-        ScoreManager.Instance.IncreaseScore(scoreValue);
-        Debug.Log("Enemy destroyed, score increased!");
+        ScoreManager.Instance?.IncreaseScore(scoreValue);
+        difficultyManager?.RegisterPlayerKill();
     }
 }

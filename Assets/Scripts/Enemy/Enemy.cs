@@ -1,20 +1,27 @@
+using System;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    // Properly defined event
+    public event Action OnDeath;
+
+    [Header("Enemy Stats")]
     public float health = 100f;
     public float speed = 3f;
     private Transform player;
 
-    void Start()
+    private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindWithTag("Player")?.transform;
     }
 
-    void Update()
+    private void Update()
     {
-        // Move toward the player
-        transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        if (player != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        }
     }
 
     public void TakeDamage(float damage)
@@ -26,8 +33,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     {
+        // Invoke the event before destroying
+        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 }

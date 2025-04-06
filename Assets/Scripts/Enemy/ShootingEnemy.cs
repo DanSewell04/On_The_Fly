@@ -2,63 +2,95 @@ using UnityEngine;
 
 public class ShootingEnemy : MonoBehaviour
 {
-    [Header("Shooting Settings")]
-    public GameObject bulletPrefab;  // Bullet prefab to instantiate
-    public Transform shootPoint;     // Point from where the bullet will shoot
-    public float shootForce = 10f;   // Force applied to the bullet
-    public float shootCooldown = 2f; // Cooldown between shots
-    public float shootingRange = 15f; // Range at which the enemy can shoot
+    [Header("Base Settings")]
+    public GameObject bulletPrefab;
+    public Transform shootPoint;
+    public float baseShootForce = 10f;
+    public float baseShootCooldown = 2f;
+    public float baseShootingRange = 15f;
+    public float baseAccuracy = 0.7f; // 70% base accuracy
+    public int scoreValue = 150;
 
-    private Transform player;        // Player's transform reference
-    private float nextShootTime;     // Time for the next possible shot
+    [Header("Difficulty Settings")]
+    public float maxAccuracyBonus = 0.3f; // Can go up to 100% accuracy at max difficulty
+    public float maxRangeBonus = 10f;
+    public float maxForceBonus = 5f;
+
+    private Transform player;
+    private float nextShootTime;
+    private DifficultyManager difficultyManager;
+
+    // Current stats after difficulty adjustment
+    private float currentShootForce;
+    private float currentShootCooldown;
+    private float currentShootingRange;
+    private float currentAccuracy;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        difficultyManager = FindAnyObjectByType<DifficultyManager>();
+        ApplyDifficultySettings();
+    }
+
+    private void ApplyDifficultySettings()
+    {
+        float difficulty = difficultyManager.currentDifficulty;
+
+        currentShootForce = baseShootForce + (maxForceBonus * difficulty);
+        currentShootCooldown = baseShootCooldown * (1 - (0.5f * difficulty)); // Faster shooting at higher difficulty
+        currentShootingRange = baseShootingRange + (maxRangeBonus * difficulty);
+        currentAccuracy = Mathf.Clamp01(baseAccuracy + (maxAccuracyBonus * difficulty));
     }
 
     private void Update()
     {
         if (player == null) return;
 
-        // Check if the player is within shooting range
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer > shootingRange) return;
+        if (distanceToPlayer > currentShootingRange) return;
 
-        // Aim at the player
         AimAtPlayer();
 
-        // Shoot if cooldown is over
         if (Time.time >= nextShootTime)
         {
-            Shoot();
-            nextShootTime = Time.time + shootCooldown; // Reset the cooldown timer
+            if (Random.value <= currentAccuracy) // Only shoot if random value is within accuracy
+            {
+                Shoot();
+            }
+            nextShootTime = Time.time + currentShootCooldown;
         }
     }
 
     private void AimAtPlayer()
     {
-        // Get the direction from the enemy to the player and normalize it
         Vector3 direction = (player.position - transform.position).normalized;
-        direction.y = 0; // Make sure the enemy doesn't rotate on the y-axis (vertical axis)
-        transform.rotation = Quaternion.LookRotation(direction); // Rotate the enemy to face the player
+        direction.y = 0;
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 
     private void Shoot()
     {
-        // Instantiate the bullet at the shoot point with the correct rotation
         GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-
-        // Ensure the bullet has a Rigidbody for movement
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+
         if (bulletRb != null)
         {
-            bulletRb.AddForce(shootPoint.forward * shootForce, ForceMode.Impulse); // Apply force to the bullet
+            // Add slight inaccuracy based on difficulty
+            Vector3 shotDirection = shootPoint.forward;
+            float inaccuracy = 0.1f * (1 - difficultyManager.currentDifficulty);
+            shotDirection += Random.insideUnitSphere * inaccuracy;
+            shotDirection.Normalize();
+
+            bulletRb.AddForce(shotDirection * currentShootForce, ForceMode.Impulse);
         }
 
-        // Destroy the bullet after 3 seconds to avoid clutter
         Destroy(bullet, 3f);
+    }
 
-        Debug.Log("Enemy fired a bullet!");
+    private void OnDestroy()
+    {
+        ScoreManager.Instance?.IncreaseScore(scoreValue);
+        difficultyManager?.RegisterPlayerKill();
     }
 }
