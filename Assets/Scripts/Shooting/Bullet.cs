@@ -11,17 +11,16 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        // Find any instance of DifficultyManager in the scene
+        damage = PlayerStats.instance.bulletDamage;
+
         difficultyManager = Object.FindAnyObjectByType<DifficultyManager>();
 
-        // Ensure the Rigidbody is attached
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.linearVelocity = transform.forward * speed;
         }
 
-        // Destroy the bullet after its lifetime
         Destroy(gameObject, lifeTime);
     }
 

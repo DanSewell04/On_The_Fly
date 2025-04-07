@@ -8,14 +8,10 @@ public class PlayerHealth : MonoBehaviour
 
     public bool isDead = false;      // Flag to check if the player is dead.
 
-    private DifficultyManager difficultyManager;
-
     void Start()
     {
-        currentHealth = maxHealth;   
+        currentHealth = maxHealth;
         Debug.Log("Player Health Initialized: " + currentHealth);
-
-        difficultyManager = FindAnyObjectByType<DifficultyManager>();
     }
 
     private void Awake()
@@ -33,28 +29,23 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Function to take damage.
     public void TakeDamage(int damage)
     {
-        if (isDead) return; // Prevent damage if player is already dead.
+        if (isDead) return;
 
-        currentHealth -= damage;  // Reduce health by damage amount.
+        currentHealth -= damage;
         Debug.Log("Player took " + damage + " damage. Current Health: " + currentHealth);
 
         if (currentHealth <= 0)
         {
-            Die();  // Trigger death when health reaches 0.
+            Die();
         }
     }
 
-    // Function to handle player death.
     private void Die()
     {
-        difficultyManager.RegisterPlayerDeath();
-
         isDead = true;
         Debug.Log("Player has died.");
-
         Destroy(gameObject);
     }
 

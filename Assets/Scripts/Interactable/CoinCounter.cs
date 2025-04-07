@@ -15,7 +15,7 @@ public class CoinCounter : MonoBehaviour
     }
 
     // Update the displayed coin count in the UI
-    private void UpdateCoinText()
+    public void UpdateCoinText()
     {
         if (coinText != null)
         {
