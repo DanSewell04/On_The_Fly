@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour , iFreezable
 {
     // Properly defined event
     public event Action OnDeath;
@@ -11,13 +11,19 @@ public class Enemy : MonoBehaviour
     public float speed = 3f;
     private Transform player;
 
+    private bool isFrozen = false;
+    private Rigidbody rb;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player")?.transform;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
+        if (isFrozen) return;
+
         if (player != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
@@ -38,5 +44,18 @@ public class Enemy : MonoBehaviour
         // Invoke the event before destroying
         OnDeath?.Invoke();
         Destroy(gameObject);
+    }
+
+
+    public void Freeze()
+    {
+        isFrozen = true;
+        if (rb != null) rb.isKinematic = true;
+    }
+
+    public void UnFreeze()
+    {
+        isFrozen = false;
+        if (rb != null) rb.isKinematic = false;
     }
 }

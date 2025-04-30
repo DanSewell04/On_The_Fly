@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class MeleeRangeEnemy : MonoBehaviour
+public class MeleeRangeEnemy : MonoBehaviour 
 {
+    
     [SerializeField] private GameObject player;
     private DifficultyManager difficultyManager;
 
@@ -20,6 +21,7 @@ public class MeleeRangeEnemy : MonoBehaviour
 
     private float timeSinceLastAttack = 0f;
     private bool isPlayerInRange = false;
+
 
     private void Start()
     {
@@ -43,6 +45,9 @@ public class MeleeRangeEnemy : MonoBehaviour
         timeSinceLastAttack += Time.deltaTime;
         MoveTowardsPlayer();
         CheckForAttackRange();
+
+
+        transform.Translate(Vector3.forward * Time.deltaTime);
 
         if (isPlayerInRange && timeSinceLastAttack >= currentAttackCooldown)
         {
