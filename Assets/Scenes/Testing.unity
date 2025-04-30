@@ -1051,17 +1051,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206219240}
   m_CullTransparentMesh: 1
---- !u!114 &226980377 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8241911563296832355, guid: 60539e243e880ac408340d515c42af82, type: 3}
-  m_PrefabInstance: {fileID: 8878658233324014814}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &253887079
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,7 +4842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyText: {fileID: 505768957}
-  healthText: {fileID: 226980377}
+  healthText: {fileID: 0}
   accuracyText: {fileID: 1360283227}
   kdText: {fileID: 780672405}
   currentDifficulty: 0.5
@@ -5028,7 +5017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1619499294
 Transform:
   m_ObjectHideFlags: 0
@@ -5811,7 +5800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2090216612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5999,6 +5988,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1422135199149282557, guid: 60539e243e880ac408340d515c42af82, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3062973951337050598, guid: 60539e243e880ac408340d515c42af82, type: 3}
       propertyPath: m_Pivot.x
       value: 0
