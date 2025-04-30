@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
-   public void LoadScene( int sceneID)
+    public void LoadScene(int sceneID)
     {
-        if(sceneID >= 0 && sceneID < SceneManager.sceneCountInBuildSettings)
+        if (sceneID >= 0 && sceneID < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(sceneID);
         }
@@ -12,5 +12,10 @@ public class SceneLoader : MonoBehaviour
         {
             Debug.Log("Scene Transition Unavaliable:" + sceneID);
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
