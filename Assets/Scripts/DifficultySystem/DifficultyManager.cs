@@ -150,4 +150,5 @@ public class DifficultyManager : MonoBehaviour
         if (accuracyText != null) accuracyText.text = "Accuracy: " + (playerAccuracy * 100).ToString("F1") + "%";
         if (kdText != null) kdText.text = "K/D Ratio: " + killDeathRatio.ToString("F2");
     }
+
 }

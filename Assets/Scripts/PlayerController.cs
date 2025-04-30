@@ -9,10 +9,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public LayerMask layerMask;
     public bool grounded;
+    public Camera playerCamera;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerCamera.fieldOfView = SettingsManager.Instance.fieldOfView;
+        
     }
 
     private void FixedUpdate()
@@ -24,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Jump();
+        float mouseX = Input.GetAxis("Mouse X") * SettingsManager.Instance.mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * SettingsManager.Instance.mouseSensitivity;
     }
 
     private void Jump()
@@ -31,7 +36,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
-            Animator.SetTrigger("Jump"); // Use trigger
+            Animator.SetTrigger("Jump"); 
         }
     }
 
