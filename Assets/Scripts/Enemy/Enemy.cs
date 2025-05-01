@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour , iFreezable
     private bool isFrozen = false;
     private Rigidbody rb;
 
+    public GameObject particleEffectPrefab;
+    public float destroyDelay = 2f;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player")?.transform;
@@ -41,6 +44,18 @@ public class Enemy : MonoBehaviour , iFreezable
 
     private void Die()
     {
+        if (particleEffectPrefab != null)
+        {
+            Instantiate(particleEffectPrefab, transform.position, Quaternion.identity);
+
+            GetComponent<MeshRenderer>().enabled = false;
+            foreach (var col in GetComponents<Collider>())
+            {
+                col.enabled = true;
+            }
+
+            Destroy(gameObject, destroyDelay);
+        }
         // Invoke the event before destroying
         OnDeath?.Invoke();
         Destroy(gameObject);

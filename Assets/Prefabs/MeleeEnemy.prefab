@@ -128,6 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   speed: 3
+  particleEffectPrefab: {fileID: 5110152719580035341, guid: 97cb50c26022d774bbe87330136dd0f7, type: 3}
+  destroyDelay: 2
 --- !u!195 &-5266546601973090568
 NavMeshAgent:
   m_ObjectHideFlags: 0
