@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8997196411234951546}
   - component: {fileID: 5983540818071046500}
   - component: {fileID: -5266546601973090568}
+  - component: {fileID: 1263452449285591575}
   m_Layer: 0
   m_Name: ShootingEnemy
   m_TagString: Untagged
@@ -126,8 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339f9d1fd23f9994c86f847dac778603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  speed: 3
+  health: 80
+  speed: 0
+  particleEffectPrefab: {fileID: 0}
+  destroyDelay: 2
 --- !u!195 &-5266546601973090568
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -150,6 +153,28 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1263452449285591575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444721318193381977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162bfcced3c7cc04a9d2a955bb2290f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 31518583526645395, guid: 7d5f5fa179094ca4abd036f0be5d9714, type: 3}
+  shootPoint: {fileID: 3729041863926440105}
+  baseShootForce: 10
+  baseShootCooldown: 2
+  baseShootingRange: 15
+  baseAccuracy: 0.7
+  scoreValue: 150
+  maxAccuracyBonus: 0.3
+  maxRangeBonus: 10
+  maxForceBonus: 5
 --- !u!1 &8485630299599612817
 GameObject:
   m_ObjectHideFlags: 0

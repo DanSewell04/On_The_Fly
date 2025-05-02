@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73becf34ef86814cabc23f0b3a5fdcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingSceneIndex: 6
+  scenesThatUseLoadingScreen: 0100000003000000040000000500000000000000
