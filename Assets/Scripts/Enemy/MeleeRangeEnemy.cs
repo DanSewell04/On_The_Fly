@@ -3,7 +3,7 @@ using UnityEngine;
 public class MeleeRangeEnemy : MonoBehaviour 
 {
     
-    [SerializeField] private GameObject player;
+    [SerializeField] public GameObject player;
     private DifficultyManager difficultyManager;
 
     // Base stats (will be modified by difficulty)
@@ -43,7 +43,6 @@ public class MeleeRangeEnemy : MonoBehaviour
     private void Update()
     {
         timeSinceLastAttack += Time.deltaTime;
-        MoveTowardsPlayer();
         CheckForAttackRange();
 
 
@@ -54,16 +53,6 @@ public class MeleeRangeEnemy : MonoBehaviour
             Attack();
         }
     }
-
-    private void MoveTowardsPlayer()
-    {
-        if (player != null)
-        {
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            transform.position += direction * currentMoveSpeed * Time.deltaTime;
-        }
-    }
-
     private void CheckForAttackRange()
     {
         if (player != null)

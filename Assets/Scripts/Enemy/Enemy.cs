@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour , iFreezable
         if (player != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            Vector3 look = (player.transform.position - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(look);
         }
     }
 
@@ -47,12 +49,6 @@ public class Enemy : MonoBehaviour , iFreezable
         if (particleEffectPrefab != null)
         {
             Instantiate(particleEffectPrefab, transform.position, Quaternion.identity);
-
-            GetComponent<MeshRenderer>().enabled = false;
-            foreach (var col in GetComponents<Collider>())
-            {
-                col.enabled = true;
-            }
 
             Destroy(gameObject, destroyDelay);
         }
