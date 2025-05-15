@@ -6,7 +6,7 @@ using System.Collections;
 public class SpawnManager : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private float _spawnDelay = 3f;
     [SerializeField] private int _maxEnemies = 10;
@@ -40,7 +40,8 @@ public class SpawnManager : MonoBehaviour
             if (_activeEnemies < GetAdjustedMaxEnemies() && _spawnPoints.Length > 0)
             {
                 Transform spawnPoint = _spawnPoints[UnityEngine.Random.Range(0, _spawnPoints.Length)];
-                GameObject enemy = Instantiate(_enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+                int enemyIndex = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+                GameObject enemy = Instantiate(_enemyPrefab[enemyIndex], spawnPoint.position, spawnPoint.rotation);
                 _spawnedEnemies.Add(enemy);
                 _activeEnemies++;
 
