@@ -60,7 +60,7 @@ public class ShopManager : MonoBehaviour
 
             // Increase max health by a fixed amount (e.g., +50 health)
             playerHealth.maxHealth += 50;
-            playerHealth.currentHealth = playerHealth.maxHealth;  // Restore health to ma
+            playerHealth.currentHealth = playerHealth.maxHealth;  // Restore health to max
 
 
             // Increase the price for the next health upgrade
