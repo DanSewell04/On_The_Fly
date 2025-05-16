@@ -11,6 +11,7 @@ public class DifficultyManager : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI accuracyText;
     public TextMeshProUGUI kdText;
+    public Image healthSlider;
 
     // Player performance metrics
     private float playerHealthPercentage = 1f;
@@ -62,7 +63,9 @@ public class DifficultyManager : MonoBehaviour
 
             // Update UI every update interval
             UpdateUI();
+            
         }
+        healthSlider.fillAmount = playerHealthPercentage;
     }
 
     private void UpdatePlayerMetrics()

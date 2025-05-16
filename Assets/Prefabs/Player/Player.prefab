@@ -2011,7 +2011,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe912eca63f29974193239c43009f31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 1486934273339988035}
   layerMask:
     serializedVersion: 2
     m_Bits: 256

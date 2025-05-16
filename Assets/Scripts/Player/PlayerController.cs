@@ -5,7 +5,6 @@ using UnityEngine.Android;
 
 public class PlayerController : MonoBehaviour
 {
-    public Animator Animator;
     private Rigidbody rb;
     public LayerMask layerMask;
     public bool grounded;
@@ -52,10 +51,6 @@ public class PlayerController : MonoBehaviour
         if (movement.magnitude > 1) movement.Normalize();
 
         rb.MovePosition(rb.position + movement * movementSpeed * Time.fixedDeltaTime);
-
-
-        Animator.SetFloat("Vertical", verticalAxis);
-        Animator.SetFloat("Horizontal", horizontalAxis);
     }
 
     private void Look()
