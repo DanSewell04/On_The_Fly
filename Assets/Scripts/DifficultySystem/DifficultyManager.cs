@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DifficultyManager : MonoBehaviour
 {
@@ -44,8 +46,6 @@ public class DifficultyManager : MonoBehaviour
     {
         // Initialize with player's starting health
         maxPlayerHealth = PlayerHealth.instance.maxHealth;
-
-        // Optionally, set the UI elements on start
         UpdateUI();
     }
 

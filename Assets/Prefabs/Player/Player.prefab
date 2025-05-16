@@ -2060,6 +2060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 2373750316523754019}
   projectilePrefab: {fileID: 31518583526645395, guid: 59da9c69f0cf8a246b27bcb8005bcfd1, type: 3}
+  shootSound: {fileID: 0}
   projectileForce: 350
   projectileDamage: 10
 --- !u!114 &2745515466168402666

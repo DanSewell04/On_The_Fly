@@ -4,6 +4,7 @@ public class PlayerShooting : MonoBehaviour
 {
     public Transform shootPoint;
     public GameObject projectilePrefab;
+    public AudioSource shootSound;
     public float projectileForce = 700f;
     public float projectileDamage = 25f;
 
@@ -33,6 +34,7 @@ public class PlayerShooting : MonoBehaviour
         {
             rb.AddForce(shootPoint.forward * projectileForce);
         }
+        projectile.GetComponent<AudioSource>().Play();
 
         Bullet bullet = projectile.GetComponent<Bullet>();
         if (bullet != null)
