@@ -16,8 +16,8 @@ public class PauseMenu : MonoBehaviour
     public void TogglePause()
     {
         bool isPaused = Time.timeScale == 0;
-        Time.timeScale = isPaused ? 1 : 0;
         pauseMenu.SetActive(!isPaused);
+        SetCursor(!isPaused);
     }
 
     public void PauseScreen()

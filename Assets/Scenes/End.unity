@@ -360,7 +360,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1001 &464670736
+--- !u!1001 &312803429
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -407,6 +407,22 @@ PrefabInstance:
     - target: {fileID: 421552653716708546, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012678279535802587, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
+      propertyPath: menuScenesIndexes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012678279535802587, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
+      propertyPath: 'menuScenesIndexes.Array.data[2]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012678279535802587, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
+      propertyPath: 'menuScenesIndexes.Array.data[3]'
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012678279535802587, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
+      propertyPath: 'menuScenesIndexes.Array.data[4]'
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8877537658459780087, guid: 00f65c3d3f39bdd49b0abbb05ae69a0b, type: 3}
       propertyPath: m_Name
@@ -1470,4 +1486,4 @@ SceneRoots:
   - {fileID: 206907777}
   - {fileID: 1652622923}
   - {fileID: 1388708318}
-  - {fileID: 464670736}
+  - {fileID: 312803429}

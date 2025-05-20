@@ -11,6 +11,8 @@ public class SettingsManager : MonoBehaviour
     [Range(0.1f, 10f)] public float mouseSensitivity;
     [Range(60f, 120f)] public float fieldOfView = 90f;
 
+    [SerializeField] private GameObject audioPanel;
+
     public void Awake()
     {
         if(instance == null)
