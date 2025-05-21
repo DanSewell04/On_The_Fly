@@ -1531,7 +1531,8 @@ MonoBehaviour:
   m_text: 'Controls;
 
     To Move about use WASD. Shoot is Left click. To dash, press
-    left shift and to use the flashlight press F on the keyboard.'
+    left shift, to use the flashlight press F and to interact with the vending machine,
+    press E.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
